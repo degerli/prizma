@@ -1,0 +1,40 @@
+package com.hrzafer.prizma.feature;
+
+import com.hrzafer.prizma.feature.value.FeatureValue;
+import com.hrzafer.prizma.feature.value.IntegerValue;
+import com.hrzafer.prizma.preprocessing.Analyzer;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+
+/**
+ * Works only for integer numbers so far.
+ *
+ * @author harun
+ */
+public class NumberCount extends SingleTokenFeature {
+
+    public NumberCount(String type, String field, String name, String description, Map<String, String> parameters, Analyzer analyzer) {
+        super(type, field, name, description, parameters, analyzer);
+    }
+
+    public static String CLEAN_REGEX = "[\\*\\-\\:\\\"\\.,\\(\\);?!]";
+
+    @Override
+    public List<FeatureValue> extract(String data) {
+        String source = data.replaceAll(CLEAN_REGEX, " ");
+        Scanner s = new Scanner(source);
+        Integer numberCount = 0;
+        while (s.hasNext()) {
+            if (s.hasNextInt()) {
+                numberCount++;
+            }
+            s.next();
+        }
+        FeatureValue value = new IntegerValue(numberCount);
+        return Collections.singletonList(value);
+    }
+
+}

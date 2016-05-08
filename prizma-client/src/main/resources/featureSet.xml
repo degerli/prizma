@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<featureSet>
+    <analyzers>
+        <analyzer name="classic">
+            <normalizer name="WeirdMSWordCharactersCharFilter"/>
+            <tokenizer name="LetterDigitSingeQuoteTokenizer"/>
+            <filter name="TooShortTokenFilter"/>
+            <filter name="TooLongTokenFilter"/>
+            <filter name="MultipleUnderscoreRemover"/>
+            <filter name="ToLowerCaseConverter"/>
+            <filter name="StemmerFilter"/>
+            <filter name="NumberRemover"/>
+            <filter name="StopWordRemover"/>
+        </analyzer>
+    </analyzers>
+
+    <features>
+        <feature type="TermVector" field="content" name="Unigram binary" >
+            <description>Bla bla bla</description>
+            <parameters>
+                <parameter name="nGramSize" value="1"/>
+                <parameter name="weight" value="binary"/>
+                <parameter name="minFrequency" value="2"/>
+            </parameters>
+            <analyzer name="classic"/>
+        </feature>
+
+        <feature type="PunctuationRatio" field="content" name="PunctuationCommaRatio on content">
+            <description>Bla bla bla</description>
+            <parameters>
+                <parameter name="char" value="."/>
+            </parameters>
+            <analyzer name="classic"/>
+        </feature>
+
+        <feature type="WordLengthAverage" field="content" name="WordLengthAverage on content">
+            <description>Bla bla bla</description>
+            <analyzer name="classic"/>
+        </feature>
+
+        <feature type="NumberCount" name="NumberCount on content">
+            <description>Bla bla bla</description>
+            <analyzer name="classic"/>
+        </feature>
+
+        <feature type="TermVector" field="content" name="Bigrams on content">
+            <description>Bla bla bla</description>
+            <parameters>
+                <parameter name="nGramSize" value="1"/>
+                <parameter name="weight" value="binary"/>
+                <parameter name="minFrequency" value="2"/>
+            </parameters>
+            <analyzer>
+                <normalizer name="WeirdMSWordCharactersNormalizer"/>
+                <tokenizer name="StandardTokenizer"/>
+                <filter name="TooShortTokenFilter"/>
+                <filter name="TooLongTokenFilter"/>
+                <filter name="MultipleUnderscoreRemover"/>
+                <filter name="ToLowerCaseConverter"/>
+                <filter name="StemmerFilter"/>
+                <filter name="NumberRemover"/>
+                <filter name="StopWordRemover"/>
+            </analyzer>
+        </feature>
+    </features>
+
+</featureSet>
